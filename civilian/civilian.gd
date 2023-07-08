@@ -2,21 +2,51 @@
 extends PathFollow2D
 class_name Civilian
 
+signal detected_player
+
 enum State {
 	Default,
 	Stunned,
 	Confused,
-	Controlled
+	Controlled,
+	Suspicious
 }
+
+enum Weapon {
+	Melee,
+	Taser,
+	Gun
+}
+
+const walk_speed := 75.0
+const suspicion_clock_end := 0.5
 
 @export var body: CharacterBody2D
 @export var nav_agent: NavigationAgent2D
 @export var stun_timer: Timer
-var state := State.Default
+@export var suspicious_timer: Timer
+@export var weapon := Weapon.Melee
+
+var state := State.Default:
+	set(v):
+		match v: # on-enter state
+			State.Default:
+				body.position = Vector2.ZERO
+			_:
+				pass
+		
+		match state: # on-exit state
+			State.Suspicious:
+				suspicion_clock = 0.0
+			_:
+				pass
+		
+		state = v
 
 var hover := false
+var near_target := false
 
-const walk_speed := 75.0
+var suspicion_clock := 0.0
 
 func _process(_delta):
 	queue_redraw()
@@ -25,24 +55,22 @@ func _physics_process(delta):
 	if not Engine.is_editor_hint():
 		match state:
 			State.Default:
-				print("default")
 				progress += walk_speed * delta
 			State.Controlled:
 				pass
 			State.Stunned:
-				print("stunned")
+				pass
+			State.Suspicious:
 				pass
 			State.Confused:
 				var target := nav_agent.get_next_path_position()
 				var direction := body.global_position.direction_to(target)
-				print("confused", target, global_position, direction)
 				
 				body.velocity = lerp(body.velocity, direction * walk_speed, 3.0 * delta)
 				body.move_and_slide()
 				
 				if nav_agent.is_navigation_finished():
-					state = State.Default
-					body.position = Vector2.ZERO
+					self.state = State.Default
 			_:
 				push_error("State '{0}' not implemented".format([state]))
 
@@ -86,3 +114,15 @@ func _on_character_body_2d_mouse_entered():
 
 func _on_character_body_2d_mouse_exited():
 	hover = false
+
+func suspicion_tick(delta):
+	suspicious_timer.start()
+	suspicion_clock += delta
+	if state != State.Suspicious:
+		self.state = State.Suspicious
+	
+	if suspicion_clock >= suspicion_clock_end:
+		detected_player.emit()
+
+func _on_suspicious_timer_timeout():
+	self.state = State.Default

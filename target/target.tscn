@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://crxud02bvvki7"]
+
+[ext_resource type="Script" path="res://target/target.gd" id="1_bnc61"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mo7kv"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xlqwi"]
+radius = 45.0111
+
+[node name="Target" type="StaticBody2D"]
+script = ExtResource("1_bnc61")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_mo7kv")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_xlqwi")
+debug_color = Color(0.992157, 0, 0.262745, 0.419608)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

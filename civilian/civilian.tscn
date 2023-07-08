@@ -5,11 +5,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_dep2g"]
 radius = 15.0
 
-[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "stun_timer") groups=["civilian"]]
+[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "stun_timer", "suspicious_timer") groups=["civilian"]]
 script = ExtResource("1_kqpa8")
 body = NodePath("CharacterBody2D")
 nav_agent = NodePath("CharacterBody2D/NavigationAgent2D")
 stun_timer = NodePath("StunTimer")
+suspicious_timer = NodePath("SuspiciousTimer")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 input_pickable = true
@@ -25,6 +26,10 @@ target_desired_distance = 1.0
 wait_time = 3.0
 one_shot = true
 
+[node name="SuspiciousTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="mouse_entered" from="CharacterBody2D" to="." method="_on_character_body_2d_mouse_entered"]
 [connection signal="mouse_exited" from="CharacterBody2D" to="." method="_on_character_body_2d_mouse_exited"]
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
+[connection signal="timeout" from="SuspiciousTimer" to="." method="_on_suspicious_timer_timeout"]
