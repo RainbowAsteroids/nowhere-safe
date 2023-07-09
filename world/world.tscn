@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bvqkyk01h542u"]
+[gd_scene load_steps=12 format=3 uid="uid://bvqkyk01h542u"]
 
 [ext_resource type="Texture2D" uid="uid://bxivamxpsnvdr" path="res://tile-map/tile.png" id="1_qgk20"]
 [ext_resource type="Script" path="res://world/world.gd" id="1_s5rh5"]
@@ -39,11 +39,16 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="world" type="Node2D" node_paths=PackedStringArray("win_screen", "lose_screen")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_06185"]
+
+[node name="world" type="Node2D" node_paths=PackedStringArray("win_screen", "lose_screen", "current_time", "best_time", "best_time_indicator")]
 process_mode = 3
 script = ExtResource("1_s5rh5")
 win_screen = NodePath("WinScreen")
 lose_screen = NodePath("LoseScreen")
+current_time = NodePath("WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/Time")
+best_time = NodePath("WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/BestTime")
+best_time_indicator = NodePath("WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/BestTimeIndicator")
 metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -91,7 +96,6 @@ theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 50
 
 [node name="Label" type="Label" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -102,6 +106,39 @@ theme_override_font_sizes/font_size = 70
 text = "You win!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxEmpty_06185")
+
+[node name="Time" type="Label" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "Time: 70:09:420"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BestTime" type="Label" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "Best Time: 70:09:420"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BestTimeIndicator" type="Label" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0, 1)
+theme_override_font_sizes/font_size = 23
+text = "New Best Time!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+theme_override_styles/separator = SubResource("StyleBoxEmpty_06185")
 
 [node name="MarginContainer" type="MarginContainer" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -64,6 +64,9 @@ curve = SubResource("Curve2D_8gk8p")
 position = Vector2(612, 122)
 rotation = -0.00384613
 
+[node name="VBoxContainer" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer" index="0"]
+theme_override_constants/separation = 0
+
 [node name="Label" type="Label" parent="." index="7"]
 offset_left = 87.0
 offset_top = 255.0

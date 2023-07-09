@@ -4,7 +4,13 @@ class_name World
 @export var win_screen: CanvasLayer
 @export var lose_screen: CanvasLayer
 
+@export var current_time: Label
+@export var best_time: Label
+@export var best_time_indicator: Control
+
 var world_num := -1
+var start_time := Time.get_ticks_msec()
+var duration: float
 
 func lose():
 	print("lose")
@@ -14,6 +20,24 @@ func lose():
 
 func win():
 	print("win")
+	duration = float(Time.get_ticks_msec() - start_time) / 1000.0
+	
+	current_time.text = "Time: {0}".format([
+		RunTimeManager.format_time(duration)
+	])
+	if world_num in RunTimeManager.best_times:
+		best_time.text = "Best time: {0}".format([
+			RunTimeManager.format_time(RunTimeManager.best_times[world_num])
+		])
+		
+		if duration < RunTimeManager.best_times[world_num]:
+			best_time_indicator.visible = true
+			RunTimeManager.best_times[world_num] = duration
+			RunTimeManager.sync()
+	else:
+		best_time.visible = false
+		RunTimeManager.best_times[world_num] = duration
+		RunTimeManager.sync()
 	
 	win_screen.visible = true
 	get_tree().paused = true
