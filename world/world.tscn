@@ -52,11 +52,12 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_uvs7h"]
 gradient = SubResource("Gradient_0l24e")
 
-[node name="world" type="Node2D" node_paths=PackedStringArray("win_screen", "lose_screen", "current_time", "best_time", "best_time_indicator")]
+[node name="world" type="Node2D" node_paths=PackedStringArray("win_screen", "lose_screen", "next_level_button", "current_time", "best_time", "best_time_indicator")]
 process_mode = 3
 script = ExtResource("1_s5rh5")
 win_screen = NodePath("WinScreen")
 lose_screen = NodePath("LoseScreen")
+next_level_button = NodePath("WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/NextLevelButton")
 current_time = NodePath("WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/Time")
 best_time = NodePath("WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/BestTime")
 best_time_indicator = NodePath("WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/BestTimeIndicator")
@@ -167,7 +168,7 @@ text = "Next Level"
 
 [node name="MainMenuButton" type="Button" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 6
 theme_override_font_sizes/font_size = 25
 text = "Main Menu"
 
@@ -241,4 +242,6 @@ texture = SubResource("GradientTexture1D_uvs7h")
 [connection signal="lose" from="CharacterController" to="." method="_on_character_controller_lose"]
 [connection signal="win" from="CharacterController" to="." method="_on_character_controller_win"]
 [connection signal="pressed" from="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
+[connection signal="pressed" from="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="LoseScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="LoseScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

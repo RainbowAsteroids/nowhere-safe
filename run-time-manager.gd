@@ -36,7 +36,7 @@ func format_time(time_sec: float) -> String:
 	var seconds := (time_sec as int) % 60
 	var millis := ((time_sec - floor(time_sec)) * 1000) as int
 	
-	return "{m}:{s}:{ms}".format({
+	return "{m}:{s}.{ms}".format({
 		"m": format_number(minutes, 2), 
 		"s": format_number(seconds, 2), 
 		"ms": format_number(millis, 3)
