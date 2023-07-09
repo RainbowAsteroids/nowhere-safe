@@ -96,6 +96,24 @@ func _process(delta):
 	else:
 		target.attacked = false
 		charge_attack_clock = 0.0
+	
+	var control_targets = get_tree().get_nodes_in_group("civilian") \
+			.filter(func(node): return node.hover)
+	
+	for control_target in control_targets:
+		if control_target is Civilian:
+			var space_state = get_world_2d().direct_space_state
+			var query = PhysicsRayQueryParameters2D.create(
+				controlled.body.global_position,
+				control_target.body.global_position,
+				mega_mask, # default parameter
+				[controlled.body.get_rid()]
+			)
+			var result = space_state.intersect_ray(query)
+			
+			control_target.target_light.visible = \
+				result != {} and result["collider"] == control_target.body
+				
 
 func _physics_process(delta):
 	var body = controlled.body

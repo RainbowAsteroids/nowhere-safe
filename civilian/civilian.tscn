@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://mrjjviudw1s7"]
+[gd_scene load_steps=19 format=3 uid="uid://mrjjviudw1s7"]
 
 [ext_resource type="Script" path="res://civilian/civilian.gd" id="1_kqpa8"]
 [ext_resource type="Texture2D" uid="uid://bwglvjopwx8od" path="res://sprites/guard-back.png" id="2_yos5b"]
@@ -92,7 +92,19 @@ fill = 1
 fill_from = Vector2(0.470085, 0.465812)
 fill_to = Vector2(0.816239, 0.773504)
 
-[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "uncontrolled_sprite", "controlled_sprite", "bang_sprite", "interro_sprite", "stun_timer", "suspicious_timer", "target_light", "controlled_light") groups=["civilian"]]
+[sub_resource type="Gradient" id="Gradient_86m0g"]
+offsets = PackedFloat32Array(0.268852, 1)
+colors = PackedColorArray(1, 0.16, 0.16, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jw6lu"]
+gradient = SubResource("Gradient_86m0g")
+width = 196
+height = 196
+fill = 1
+fill_from = Vector2(0.470085, 0.465812)
+fill_to = Vector2(0.901709, 0.850427)
+
+[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "uncontrolled_sprite", "controlled_sprite", "bang_sprite", "interro_sprite", "stun_timer", "suspicious_timer", "target_light", "controlled_light", "suspicious_light") groups=["civilian"]]
 rotates = false
 script = ExtResource("1_kqpa8")
 body = NodePath("CharacterBody2D")
@@ -105,6 +117,7 @@ stun_timer = NodePath("StunTimer")
 suspicious_timer = NodePath("SuspiciousTimer")
 target_light = NodePath("CharacterBody2D/TargetLight")
 controlled_light = NodePath("CharacterBody2D/ControlledLight")
+suspicious_light = NodePath("CharacterBody2D/SuspiciousLight")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 input_pickable = true
@@ -154,6 +167,12 @@ visible = false
 shadow_enabled = true
 shadow_filter = 2
 texture = SubResource("GradientTexture2D_d2453")
+
+[node name="SuspiciousLight" type="PointLight2D" parent="CharacterBody2D"]
+visible = false
+shadow_enabled = true
+shadow_filter = 2
+texture = SubResource("GradientTexture2D_jw6lu")
 
 [node name="StunTimer" type="Timer" parent="."]
 wait_time = 3.0

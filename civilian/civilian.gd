@@ -42,6 +42,7 @@ const suspicion_clock_end := 0.75
 
 @export var target_light: PointLight2D
 @export var controlled_light: PointLight2D
+@export var suspicious_light: PointLight2D
 
 var state := State.Default:
 	set(v):
@@ -50,6 +51,7 @@ var state := State.Default:
 				suspicion_clock = 0.0
 				suspicious_timer.stop()
 				bang_sprite.visible = false
+				suspicious_light.visible = false
 			State.Stunned:
 				interro_sprite.visible = false
 			State.Confused:
@@ -69,6 +71,7 @@ var state := State.Default:
 				interro_sprite.visible = true
 			State.Suspicious:
 				bang_sprite.visible = true
+				suspicious_light.visible = true
 			State.Controlled:
 				controlled_light.visible = true
 			_:
@@ -76,10 +79,7 @@ var state := State.Default:
 		
 		state = v
 
-var hover := false:
-	set(v):
-		hover = v
-		target_light.visible = hover
+var hover := false
 
 var near_target := false
 

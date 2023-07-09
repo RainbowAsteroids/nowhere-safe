@@ -229,7 +229,7 @@ theme_override_font_sizes/font_size = 25
 text = "Main Menu"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.34902, 0.34902, 0.34902, 1)
+color = Color(0.588235, 0.588235, 0.588235, 1)
 
 [node name="background" type="Sprite2D" parent="."]
 modulate = Color(0.137255, 0.141176, 0.329412, 1)
