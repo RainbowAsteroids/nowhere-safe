@@ -2,10 +2,12 @@
 extends StaticBody2D
 class_name Target
 
-func _draw():
-	var color := Color.DARK_GOLDENROD
-	draw_circle(Vector2.ZERO, 15, color)
-	draw_arc(Vector2.ZERO, 15, 0, TAU, 16, color, 1, true)
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+var attacked := false:
+	set(v):
+		attacked = v
+		sprite.animation = "scared" if v else "default"
 
 func _process(_delta):
 	if Engine.is_editor_hint():

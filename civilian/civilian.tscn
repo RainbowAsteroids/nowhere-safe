@@ -1,14 +1,77 @@
-[gd_scene load_steps=3 format=3 uid="uid://mrjjviudw1s7"]
+[gd_scene load_steps=11 format=3 uid="uid://mrjjviudw1s7"]
 
 [ext_resource type="Script" path="res://civilian/civilian.gd" id="1_kqpa8"]
+[ext_resource type="Texture2D" uid="uid://bwglvjopwx8od" path="res://sprites/guard-back.png" id="2_yos5b"]
+[ext_resource type="Texture2D" uid="uid://cannqyya6hvfx" path="res://sprites/guard-front.png" id="3_av54v"]
+[ext_resource type="Texture2D" uid="uid://c7neoc8onpoic" path="res://sprites/guard-side.png" id="4_ewi87"]
+[ext_resource type="Texture2D" uid="uid://138qkmchlqlv" path="res://sprites/guard-controlled-back.png" id="5_41ovk"]
+[ext_resource type="Texture2D" uid="uid://c8n5qdii1rj5v" path="res://sprites/guard-controlled-front.png" id="6_kf17j"]
+[ext_resource type="Texture2D" uid="uid://cjpy3cfhyaxeh" path="res://sprites/guard-controlled-side.png" id="7_coghe"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_dep2g"]
-radius = 15.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fowfa"]
+radius = 17.0
+height = 74.0
 
-[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "stun_timer", "suspicious_timer") groups=["civilian"]]
+[sub_resource type="SpriteFrames" id="SpriteFrames_u2cts"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yos5b")
+}],
+"loop": true,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_av54v")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ewi87")
+}],
+"loop": true,
+"name": &"side",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ni3v8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_41ovk")
+}],
+"loop": true,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_kf17j")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_coghe")
+}],
+"loop": true,
+"name": &"side",
+"speed": 5.0
+}]
+
+[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "uncontrolled_sprite", "controlled_sprite", "stun_timer", "suspicious_timer") groups=["civilian"]]
 script = ExtResource("1_kqpa8")
 body = NodePath("CharacterBody2D")
 nav_agent = NodePath("CharacterBody2D/NavigationAgent2D")
+uncontrolled_sprite = NodePath("CharacterBody2D/UncontrolledSprite")
+controlled_sprite = NodePath("CharacterBody2D/ControlledSprite")
 stun_timer = NodePath("StunTimer")
 suspicious_timer = NodePath("SuspiciousTimer")
 
@@ -16,11 +79,24 @@ suspicious_timer = NodePath("SuspiciousTimer")
 input_pickable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CircleShape2D_dep2g")
+shape = SubResource("CapsuleShape2D_fowfa")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D"]
 path_desired_distance = 10.0
 target_desired_distance = 1.0
+
+[node name="UncontrolledSprite" type="AnimatedSprite2D" parent="CharacterBody2D"]
+texture_filter = 1
+scale = Vector2(1.17, 1.17)
+sprite_frames = SubResource("SpriteFrames_u2cts")
+animation = &"side"
+
+[node name="ControlledSprite" type="AnimatedSprite2D" parent="CharacterBody2D"]
+visible = false
+texture_filter = 1
+scale = Vector2(1.17, 1.17)
+sprite_frames = SubResource("SpriteFrames_ni3v8")
+animation = &"side"
 
 [node name="StunTimer" type="Timer" parent="."]
 wait_time = 3.0

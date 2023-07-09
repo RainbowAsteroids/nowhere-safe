@@ -1,4 +1,3 @@
-@tool
 extends PathFollow2D
 class_name Civilian
 
@@ -18,11 +17,22 @@ enum Weapon {
 	Gun
 }
 
+enum Direction {
+	Left,
+	Right,
+	Up,
+	Down
+}
+
 const walk_speed := 75.0
 const suspicion_clock_end := 0.75
 
 @export var body: CharacterBody2D
 @export var nav_agent: NavigationAgent2D
+
+@export var uncontrolled_sprite: AnimatedSprite2D
+@export var controlled_sprite: AnimatedSprite2D
+
 @export var stun_timer: Timer
 @export var suspicious_timer: Timer
 @export var weapon := Weapon.Melee
@@ -51,8 +61,53 @@ var near_target := false
 
 var suspicion_clock := 0.0
 
+@onready var prev_position := position
+@onready var prev_body_position := body.position
+
+func update_sprite_direction(direction: Direction):
+	for sprite in [uncontrolled_sprite, controlled_sprite]:
+		sprite.flip_h = direction == Direction.Left
+		match direction:
+			Direction.Up:
+				sprite.animation = "back"
+			Direction.Down:
+				sprite.animation = "front"
+			Direction.Left, Direction.Right:
+				sprite.animation = "side"
+
 func _process(_delta):
-	queue_redraw()
+	if state == State.Controlled:
+		uncontrolled_sprite.visible = false
+		controlled_sprite.visible = true
+	else:
+		uncontrolled_sprite.visible = true
+		controlled_sprite.visible = false
+	
+	uncontrolled_sprite.global_rotation = 0
+	controlled_sprite.global_rotation = 0
+	
+	var direction: Vector2
+	match state:
+		State.Default:
+			direction = position - prev_position
+		_:
+			direction = body.position - prev_body_position
+	
+	if direction.length() < 0.001: return
+	
+	if abs(direction.x) > abs(direction.y):
+		if direction.x > 0:
+			update_sprite_direction(Direction.Right)
+		else:
+			update_sprite_direction(Direction.Left)
+	else:
+		if direction.y >= 0:
+			update_sprite_direction(Direction.Down)
+		else:
+			update_sprite_direction(Direction.Up)
+	
+	prev_position = position
+	prev_body_position = body.position
 
 func _physics_process(delta):
 	if not Engine.is_editor_hint():
@@ -77,38 +132,38 @@ func _physics_process(delta):
 			_:
 				push_error("State '{0}' not implemented".format([state]))
 
-func _draw():
-	var color: Color
-	match state:
-		State.Controlled:
-			color = Color.ORANGE
-		State.Suspicious:
-			color = Color.RED
-		_:
-			match weapon:
-				Weapon.Melee:
-					color = Color.WHITE
-				Weapon.Taser:
-					color = Color.YELLOW
-				Weapon.Gun:
-					color = Color.BLACK
-	
-	draw_circle(
-		body.position, 
-		15, 
-		color
-	)
-	
-	draw_arc(
-		body.position, 
-		15, 
-		0, 
-		PI * 2, 
-		16, 
-		Color.CYAN if hover else color, 
-		2, 
-		true
-	)
+#func _draw():
+#	var color: Color
+#	match state:
+#		State.Controlled:
+#			color = Color.ORANGE
+#		State.Suspicious:
+#			color = Color.RED
+#		_:
+#			match weapon:
+#				Weapon.Melee:
+#					color = Color.WHITE
+#				Weapon.Taser:
+#					color = Color.YELLOW
+#				Weapon.Gun:
+#					color = Color.BLACK
+#
+#	draw_circle(
+#		body.position, 
+#		15, 
+#		color
+#	)
+#
+#	draw_arc(
+#		body.position, 
+#		15, 
+#		0, 
+#		PI * 2, 
+#		16, 
+#		Color.CYAN if hover else color, 
+#		2, 
+#		true
+#	)
 
 func control():
 	self.state = State.Controlled

@@ -59,6 +59,7 @@ func _process(delta):
 	
 	var can_attack = controlled.near_target or controlled.weapon == Civilian.Weapon.Gun
 	if Input.is_action_pressed("attack") and can_attack:
+		target.attacked = true
 		match controlled.weapon:
 			Civilian.Weapon.Taser:
 				win.emit()
@@ -93,6 +94,7 @@ func _process(delta):
 			_:
 				push_error("Weapon '{0}' not implemented".format([controlled.weapon]))
 	else:
+		target.attacked = false
 		charge_attack_clock = 0.0
 
 func _physics_process(delta):
