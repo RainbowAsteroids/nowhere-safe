@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://upkkfypglf6e" path="res://sprites/target-scared.png" id="3_77tot"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rb5lb"]
-radius = 19.0
-height = 76.0
+radius = 14.0
+height = 58.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xlqwi"]
 radius = 47.0106

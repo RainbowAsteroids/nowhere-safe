@@ -33,6 +33,9 @@ const suspicion_clock_end := 0.75
 @export var uncontrolled_sprite: AnimatedSprite2D
 @export var controlled_sprite: AnimatedSprite2D
 
+@export var bang_sprite: Sprite2D
+@export var interro_sprite: Sprite2D
+
 @export var stun_timer: Timer
 @export var suspicious_timer: Timer
 @export var weapon := Weapon.Melee
@@ -44,6 +47,11 @@ var state := State.Default:
 				body.position = Vector2.ZERO
 			State.Confused:
 				nav_agent.target_position = global_position
+				interro_sprite.visible = true
+			State.Stunned:
+				interro_sprite.visible = true
+			State.Suspicious:
+				bang_sprite.visible = true
 			_:
 				pass
 		
@@ -51,6 +59,9 @@ var state := State.Default:
 			State.Suspicious:
 				suspicion_clock = 0.0
 				suspicious_timer.stop()
+				bang_sprite.visible = false
+			State.Confused:
+				interro_sprite.visible = false
 			_:
 				pass
 		
@@ -82,9 +93,6 @@ func _process(_delta):
 	else:
 		uncontrolled_sprite.visible = true
 		controlled_sprite.visible = false
-	
-	uncontrolled_sprite.global_rotation = 0
-	controlled_sprite.global_rotation = 0
 	
 	var direction: Vector2
 	match state:

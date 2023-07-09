@@ -61,18 +61,15 @@ curve = SubResource("Curve2D_qayvu")
 
 [node name="Civilian" parent="Civilians/Path2D" index="0" instance=ExtResource("2_jpwkb")]
 position = Vector2(441, 533)
-rotation = -1.58537
 
 [node name="Path2D2" type="Path2D" parent="Civilians" index="1"]
 curve = SubResource("Curve2D_sy6qq")
 
 [node name="Civilian" parent="Civilians/Path2D2" index="0" instance=ExtResource("2_jpwkb")]
 position = Vector2(587, 528)
-rotation = -1.25884
 
 [node name="Path2D3" type="Path2D" parent="Civilians" index="2"]
 curve = SubResource("Curve2D_48v4u")
 
 [node name="Civilian" parent="Civilians/Path2D3" index="0" instance=ExtResource("2_jpwkb")]
 position = Vector2(834, 537)
-rotation = -1.43751

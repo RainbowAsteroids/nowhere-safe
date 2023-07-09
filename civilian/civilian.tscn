@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://mrjjviudw1s7"]
+[gd_scene load_steps=13 format=3 uid="uid://mrjjviudw1s7"]
 
 [ext_resource type="Script" path="res://civilian/civilian.gd" id="1_kqpa8"]
 [ext_resource type="Texture2D" uid="uid://bwglvjopwx8od" path="res://sprites/guard-back.png" id="2_yos5b"]
@@ -7,10 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://138qkmchlqlv" path="res://sprites/guard-controlled-back.png" id="5_41ovk"]
 [ext_resource type="Texture2D" uid="uid://c8n5qdii1rj5v" path="res://sprites/guard-controlled-front.png" id="6_kf17j"]
 [ext_resource type="Texture2D" uid="uid://cjpy3cfhyaxeh" path="res://sprites/guard-controlled-side.png" id="7_coghe"]
+[ext_resource type="Texture2D" uid="uid://ckhxahv2h4810" path="res://sprites/bang.png" id="8_67y5s"]
+[ext_resource type="Texture2D" uid="uid://bndecn7wyft7q" path="res://sprites/interro.png" id="9_lurdh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fowfa"]
-radius = 17.0
-height = 74.0
+radius = 13.0
+height = 62.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u2cts"]
 animations = [{
@@ -66,12 +68,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "uncontrolled_sprite", "controlled_sprite", "stun_timer", "suspicious_timer") groups=["civilian"]]
+[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "uncontrolled_sprite", "controlled_sprite", "bang_sprite", "interro_sprite", "stun_timer", "suspicious_timer") groups=["civilian"]]
+rotates = false
 script = ExtResource("1_kqpa8")
 body = NodePath("CharacterBody2D")
 nav_agent = NodePath("CharacterBody2D/NavigationAgent2D")
 uncontrolled_sprite = NodePath("CharacterBody2D/UncontrolledSprite")
 controlled_sprite = NodePath("CharacterBody2D/ControlledSprite")
+bang_sprite = NodePath("CharacterBody2D/BangSprite")
+interro_sprite = NodePath("CharacterBody2D/InterroSprite")
 stun_timer = NodePath("StunTimer")
 suspicious_timer = NodePath("SuspiciousTimer")
 
@@ -97,6 +102,20 @@ texture_filter = 1
 scale = Vector2(1.17, 1.17)
 sprite_frames = SubResource("SpriteFrames_ni3v8")
 animation = &"side"
+
+[node name="BangSprite" type="Sprite2D" parent="CharacterBody2D"]
+visible = false
+texture_filter = 1
+position = Vector2(-4.76837e-07, -54)
+scale = Vector2(0.574074, 0.533898)
+texture = ExtResource("8_67y5s")
+
+[node name="InterroSprite" type="Sprite2D" parent="CharacterBody2D"]
+visible = false
+texture_filter = 1
+position = Vector2(1.625, -57.375)
+scale = Vector2(0.645833, 0.577206)
+texture = ExtResource("9_lurdh")
 
 [node name="StunTimer" type="Timer" parent="."]
 wait_time = 3.0
