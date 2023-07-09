@@ -28,7 +28,8 @@ func _ready():
 		world_num = int(result.strings[1])
 	
 	next_level_path = "res://world/worlds/{0}.tscn".format([world_num + 1])
-	next_level_exists = FileAccess.file_exists(next_level_path)
+	#next_level_exists = FileAccess.file_exists(next_level_path)
+	next_level_exists = world_num < 4
 	
 	next_level_button.visible = next_level_exists
 	next_level_button.disabled = not next_level_exists
