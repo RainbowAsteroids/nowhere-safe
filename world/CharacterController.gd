@@ -28,6 +28,10 @@ const mega_mask := 4294967295
 
 var charge_attack_clock := 0.0
 
+static var instance: CharacterController
+func _ready():
+	instance = self
+
 func gun_cast() -> Dictionary:
 	const cast_length := 2000
 	var space_state := get_world_2d().direct_space_state
@@ -114,7 +118,6 @@ func _process(delta):
 			control_target.target_light.visible = \
 				result != {} and result["collider"] == control_target.body
 				
-
 func _physics_process(delta):
 	var body = controlled.body
 	var acceleration = Vector2.ZERO

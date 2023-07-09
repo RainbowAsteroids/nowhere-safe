@@ -111,6 +111,8 @@ func _process(_delta):
 	match state:
 		State.Default:
 			direction = position - prev_position
+		State.Suspicious:
+			CharacterController.instance.controlled.body.global_position - body.global_position
 		_:
 			direction = body.position - prev_body_position
 	
