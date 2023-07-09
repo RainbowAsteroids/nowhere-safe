@@ -1,0 +1,121 @@
+[gd_scene load_steps=13 format=3 uid="uid://dcqc6q4vxkvpv"]
+
+[ext_resource type="PackedScene" uid="uid://bvqkyk01h542u" path="res://world/world.tscn" id="1_7s1m8"]
+[ext_resource type="PackedScene" uid="uid://mrjjviudw1s7" path="res://civilian/civilian.tscn" id="2_7jm46"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jtqoa"]
+vertices = PackedVector2Array(101, 97, 562, 91, 563, 145, 103, 144)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(101, 97, 562, 91, 563, 145, 103, 144)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ak4g2"]
+vertices = PackedVector2Array(623, 89, 629, 463, 570, 463, 569, 91)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(569, 91, 570, 463, 629, 463, 623, 89)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_lad5q"]
+vertices = PackedVector2Array(1187, 93, 1185, 154, 633, 145, 631, 91)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1187, 93, 1185, 154, 633, 145, 631, 91)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_vjw0d"]
+vertices = PackedVector2Array(642, 247, 1188, 247, 1187, 467, 642, 456)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(642, 247, 1188, 247, 1187, 467, 642, 456)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_8blhe"]
+vertices = PackedVector2Array(729, 462, 1030, 467, 1032, 550, 729, 550)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(729, 462, 1030, 467, 1032, 550, 729, 550)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_tjbi8"]
+vertices = PackedVector2Array(726, 153, 791, 152, 793, 241, 730, 239)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(726, 153, 791, 152, 793, 241, 730, 239)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_raong"]
+vertices = PackedVector2Array(886, 155, 948, 157, 950, 239, 889, 240)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(886, 155, 948, 157, 950, 239, 889, 240)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_5ql0l"]
+vertices = PackedVector2Array(1044, 157, 1186, 160, 1185, 241, 1049, 237)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1044, 157, 1186, 160, 1185, 241, 1049, 237)])
+
+[sub_resource type="Curve2D" id="Curve2D_jpxm7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 678, 120, 0, 0, 0, 0, 751, 121, 0, 0, 0, 0, 755, 293, 0, 0, 0, 0, 594, 293, 0, 0, 0, 0, 597, 122, 0, 0, 0, 0, 678, 120)
+}
+point_count = 6
+
+[sub_resource type="Curve2D" id="Curve2D_lnoob"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 120, 120, 0, 0, 0, 0, 524, 120, 0, 0, 0, 0, 120, 120)
+}
+point_count = 3
+
+[node name="world" instance=ExtResource("1_7s1m8")]
+
+[node name="TileMap" parent="." index="0"]
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 458752, 0, 0, 524288, 0, 0, 1, 0, 0, 131073, 0, 0, 524289, 0, 0, 2, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 393218, 0, 0, 524290, 0, 0, 3, 0, 0, 524291, 0, 0, 4, 0, 0, 524292, 0, 0, 5, 0, 0, 524293, 0, 0, 6, 0, 0, 524294, 0, 0, 7, 0, 0, 524295, 0, 0, 8, 0, 0, 524296, 0, 0, 9, 0, 0, 524297, 0, 0, 10, 0, 0, 524298, 0, 0, 11, 0, 0, 524299, 0, 0, 12, 0, 0, 524300, 0, 0, 13, 0, 0, 524301, 0, 0, 14, 0, 0, 524302, 0, 0, 15, 0, 0, 65551, 0, 0, 131087, 0, 0, 196623, 0, 0, 262159, 0, 0, 327695, 0, 0, 393231, 0, 0, 458767, 0, 0, 524303, 0, 0, 131075, 0, 0, 131076, 0, 0, 262148, 0, 0, 327684, 0, 0, 393220, 0, 0, 458756, 0, 0, 131078, 0, 0, 196614, 0, 0, 131077, 0, 0, 262150, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 196609, 0, 0, 262145, 0, 0, 327681, 0, 0, 393217, 0, 0, 458753, 0, 0, 458754, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 458755, 0, 0, 196612, 0, 0, 196613, 0, 0, 262149, 0, 0, 327685, 0, 0, 393221, 0, 0, 458757, 0, 0, 327686, 0, 0, 393222, 0, 0, 458758, 0, 0, 393223, 0, 0, 458759, 0, 0, 393224, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0, 393229, 0, 0, 458765, 0, 0, 393230, 0, 0, 458766, 0, 0)
+
+[node name="CharacterController" parent="." index="1" node_paths=PackedStringArray("controlled")]
+controlled = NodePath("../Civilians/Path2D4/Civilian")
+
+[node name="Target" parent="." index="2"]
+position = Vector2(866, 397)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="NavMeshes" index="0"]
+navigation_polygon = SubResource("NavigationPolygon_jtqoa")
+
+[node name="NavigationRegion2D2" type="NavigationRegion2D" parent="NavMeshes" index="1"]
+navigation_polygon = SubResource("NavigationPolygon_ak4g2")
+
+[node name="NavigationRegion2D3" type="NavigationRegion2D" parent="NavMeshes" index="2"]
+navigation_polygon = SubResource("NavigationPolygon_lad5q")
+
+[node name="NavigationRegion2D4" type="NavigationRegion2D" parent="NavMeshes" index="3"]
+navigation_polygon = SubResource("NavigationPolygon_vjw0d")
+
+[node name="NavigationRegion2D5" type="NavigationRegion2D" parent="NavMeshes" index="4"]
+navigation_polygon = SubResource("NavigationPolygon_8blhe")
+
+[node name="NavigationRegion2D6" type="NavigationRegion2D" parent="NavMeshes" index="5"]
+navigation_polygon = SubResource("NavigationPolygon_tjbi8")
+
+[node name="NavigationRegion2D7" type="NavigationRegion2D" parent="NavMeshes" index="6"]
+navigation_polygon = SubResource("NavigationPolygon_raong")
+
+[node name="NavigationRegion2D8" type="NavigationRegion2D" parent="NavMeshes" index="7"]
+navigation_polygon = SubResource("NavigationPolygon_5ql0l")
+
+[node name="Path2D" type="Path2D" parent="Civilians" index="0"]
+position = Vector2(5, -7)
+curve = SubResource("Curve2D_jpxm7")
+
+[node name="Civilian" parent="Civilians/Path2D" index="0" instance=ExtResource("2_7jm46")]
+position = Vector2(678, 120)
+rotation = 0.0136978
+
+[node name="Path2D2" type="Path2D" parent="Civilians" index="1"]
+position = Vector2(165, -7)
+curve = SubResource("Curve2D_jpxm7")
+
+[node name="Civilian" parent="Civilians/Path2D2" index="0" instance=ExtResource("2_7jm46")]
+position = Vector2(678, 120)
+rotation = 0.0136978
+
+[node name="Path2D3" type="Path2D" parent="Civilians" index="2"]
+position = Vector2(325, -7)
+curve = SubResource("Curve2D_jpxm7")
+
+[node name="Civilian" parent="Civilians/Path2D3" index="0" instance=ExtResource("2_7jm46")]
+position = Vector2(678, 120)
+rotation = 0.0136978
+
+[node name="Path2D4" type="Path2D" parent="Civilians" index="3"]
+curve = SubResource("Curve2D_lnoob")
+
+[node name="Civilian" parent="Civilians/Path2D4" index="0" instance=ExtResource("2_7jm46")]
+position = Vector2(120, 120)

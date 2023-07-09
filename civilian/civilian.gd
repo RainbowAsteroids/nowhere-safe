@@ -19,7 +19,7 @@ enum Weapon {
 }
 
 const walk_speed := 75.0
-const suspicion_clock_end := 0.5
+const suspicion_clock_end := 0.75
 
 @export var body: CharacterBody2D
 @export var nav_agent: NavigationAgent2D
@@ -32,12 +32,15 @@ var state := State.Default:
 		match v: # on-enter state
 			State.Default:
 				body.position = Vector2.ZERO
+			State.Confused:
+				nav_agent.target_position = global_position
 			_:
 				pass
 		
 		match state: # on-exit state
 			State.Suspicious:
 				suspicion_clock = 0.0
+				suspicious_timer.stop()
 			_:
 				pass
 		
@@ -75,7 +78,20 @@ func _physics_process(delta):
 				push_error("State '{0}' not implemented".format([state]))
 
 func _draw():
-	var color = Color.WHITE if state != State.Controlled else Color.ORANGE
+	var color: Color
+	match state:
+		State.Controlled:
+			color = Color.ORANGE
+		State.Suspicious:
+			color = Color.RED
+		_:
+			match weapon:
+				Weapon.Melee:
+					color = Color.WHITE
+				Weapon.Taser:
+					color = Color.YELLOW
+				Weapon.Gun:
+					color = Color.BLACK
 	
 	draw_circle(
 		body.position, 
@@ -106,8 +122,6 @@ func uncontrol():
 
 func _on_stun_timer_timeout():
 	self.state = State.Confused
-	
-	nav_agent.target_position = global_position
 
 func _on_character_body_2d_mouse_entered():
 	hover = state != State.Controlled
@@ -125,4 +139,4 @@ func suspicion_tick(delta):
 		detected_player.emit()
 
 func _on_suspicious_timer_timeout():
-	self.state = State.Default
+	self.state = State.Confused

@@ -1,0 +1,93 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqvfpcnnjk0qt"]
+
+[ext_resource type="PackedScene" uid="uid://bvqkyk01h542u" path="res://world/world.tscn" id="1_xcs1f"]
+[ext_resource type="PackedScene" uid="uid://mrjjviudw1s7" path="res://civilian/civilian.tscn" id="2_gdpac"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_3406b"]
+vertices = PackedVector2Array(104, 103, 626, 99, 628, 302, 103, 300)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(104, 103, 626, 99, 628, 302, 103, 300)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_mspiy"]
+vertices = PackedVector2Array(107, 422, 620, 419, 624, 623, 99, 621)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(107, 422, 620, 419, 624, 623, 99, 621)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_qn476"]
+vertices = PackedVector2Array(624, 307, 629, 414, 567, 415, 567, 308)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(567, 308, 567, 415, 629, 414, 624, 307)])
+
+[sub_resource type="Curve2D" id="Curve2D_llaj4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 202, 290, 0, 0, 0, 0, 113, 289, 0, 0, 0, 0, 108, 110, 0, 0, 0, 0, 275, 108, 0, 0, 0, 0, 275, 290, 0, 0, 0, 0, 202, 290)
+}
+point_count = 6
+
+[sub_resource type="Curve2D" id="Curve2D_3qqv0"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 437, 119, 0, 0, 0, 0, 372, 119, 0, 0, 0, 0, 370, 294, 0, 0, 0, 0, 515, 295, 0, 0, 0, 0, 515, 118, 0, 0, 0, 0, 437, 119)
+}
+point_count = 6
+
+[sub_resource type="Curve2D" id="Curve2D_rqhl2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 123, 439, 0, 0, 0, 0, 540, 435, 0, 0, 0, 0, 124, 438)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_v0ca3"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 539, 614, 0, 0, 0, 0, 132, 613, 0, 0, 0, 0, 538, 612)
+}
+point_count = 3
+
+[node name="world" instance=ExtResource("1_xcs1f")]
+
+[node name="TileMap" parent="." index="0"]
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 458752, 0, 0, 524288, 0, 0, 1, 0, 0, 524289, 0, 0, 2, 0, 0, 524290, 0, 0, 3, 0, 0, 524291, 0, 0, 4, 0, 0, 524292, 0, 0, 5, 0, 0, 524293, 0, 0, 6, 0, 0, 524294, 0, 0, 7, 0, 0, 524295, 0, 0, 8, 0, 0, 524296, 0, 0, 9, 0, 0, 524297, 0, 0, 10, 0, 0, 524298, 0, 0, 11, 0, 0, 524299, 0, 0, 12, 0, 0, 524300, 0, 0, 13, 0, 0, 524301, 0, 0, 14, 0, 0, 524302, 0, 0, 15, 0, 0, 65551, 0, 0, 131087, 0, 0, 196623, 0, 0, 262159, 0, 0, 327695, 0, 0, 393231, 0, 0, 458767, 0, 0, 524303, 0, 0, 131074, 0, 0, 131077, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 393218, 0, 0, 393221, 0, 0, 65544, 0, 0, 131080, 0, 0, 196616, 0, 0, 262152, 0, 0, 327688, 0, 0, 393224, 0, 0, 458760, 0, 0)
+
+[node name="CharacterController" parent="." index="1" node_paths=PackedStringArray("controlled")]
+controlled = NodePath("../Civilians/Path2D/Civilian")
+
+[node name="Target" parent="." index="2"]
+position = Vector2(320, 523)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="NavMeshes" index="0"]
+navigation_polygon = SubResource("NavigationPolygon_3406b")
+
+[node name="NavigationRegion2D2" type="NavigationRegion2D" parent="NavMeshes" index="1"]
+navigation_polygon = SubResource("NavigationPolygon_mspiy")
+
+[node name="NavigationRegion2D3" type="NavigationRegion2D" parent="NavMeshes" index="2"]
+navigation_polygon = SubResource("NavigationPolygon_qn476")
+
+[node name="Path2D" type="Path2D" parent="Civilians" index="0"]
+curve = SubResource("Curve2D_llaj4")
+
+[node name="Civilian" parent="Civilians/Path2D" index="0" instance=ExtResource("2_gdpac")]
+position = Vector2(224.544, 108.604)
+rotation = -0.0119755
+progress = 384.62
+
+[node name="Path2D2" type="Path2D" parent="Civilians" index="1"]
+curve = SubResource("Curve2D_3qqv0")
+
+[node name="Civilian" parent="Civilians/Path2D2" index="0" instance=ExtResource("2_gdpac")]
+position = Vector2(386.345, 294.113)
+rotation = 0.00689644
+progress = 256.41
+
+[node name="Path2D3" type="Path2D" parent="Civilians" index="2"]
+curve = SubResource("Curve2D_rqhl2")
+
+[node name="Civilian" parent="Civilians/Path2D3" index="0" instance=ExtResource("2_gdpac")]
+position = Vector2(123, 439)
+rotation = -0.00959203
+
+[node name="Path2D4" type="Path2D" parent="Civilians" index="3"]
+curve = SubResource("Curve2D_v0ca3")
+
+[node name="Civilian" parent="Civilians/Path2D4" index="0" instance=ExtResource("2_gdpac")]
+position = Vector2(539, 614)
+rotation = -3.13914

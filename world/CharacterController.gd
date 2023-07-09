@@ -62,7 +62,6 @@ func _process(delta):
 		match controlled.weapon:
 			Civilian.Weapon.Taser:
 				win.emit()
-				get_tree().paused = true
 			Civilian.Weapon.Melee:
 				charge_attack_clock += delta
 				
@@ -74,7 +73,7 @@ func _process(delta):
 							controlled.body.global_position,
 							civilian.body.global_position,
 							mega_mask,
-							[controlled.body.get_rid()]
+							[controlled.body.get_rid(), target.get_rid()]
 						)
 						var result = space_state.intersect_ray(query)
 						
@@ -83,7 +82,6 @@ func _process(delta):
 				
 				if charge_attack_clock >= charge_attack_time:
 					win.emit()
-					get_tree().paused = true
 			Civilian.Weapon.Gun:
 				var result = gun_cast()
 				var success: bool = result != {} and result["collider"] == target
@@ -92,8 +90,6 @@ func _process(delta):
 					win.emit()
 				else:
 					lose.emit()
-				
-				get_tree().paused = true
 			_:
 				push_error("Weapon '{0}' not implemented".format([controlled.weapon]))
 	else:

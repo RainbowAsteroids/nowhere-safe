@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://bvqkyk01h542u"]
+[gd_scene load_steps=11 format=3 uid="uid://bvqkyk01h542u"]
 
 [ext_resource type="Texture2D" uid="uid://bxivamxpsnvdr" path="res://tile-map/tile.png" id="1_qgk20"]
 [ext_resource type="Script" path="res://world/world.gd" id="1_s5rh5"]
-[ext_resource type="PackedScene" uid="uid://mrjjviudw1s7" path="res://civilian/civilian.tscn" id="2_yrjrr"]
 [ext_resource type="Script" path="res://world/CharacterController.gd" id="3_rrdjt"]
+[ext_resource type="Texture2D" uid="uid://cygsgh4vg1irv" path="res://tile-map/vent.png" id="3_tu802"]
 [ext_resource type="PackedScene" uid="uid://crxud02bvvki7" path="res://target/target.tscn" id="4_vfos8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rqnkj"]
@@ -14,109 +14,171 @@ texture_region_size = Vector2i(80, 80)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5hp12"]
+texture = ExtResource("3_tu802")
+texture_region_size = Vector2i(80, 80)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-40, -40, 40, -40, 40, -9.5, -40, -9.5)
+0:0/0/physics_layer_0/polygon_1/points = PackedVector2Array(-40, 10.5, 40, 11, 40, 40, -40, 40)
+
 [sub_resource type="TileSet" id="TileSet_hthye"]
 tile_size = Vector2i(80, 80)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_rqnkj")
+sources/1 = SubResource("TileSetAtlasSource_5hp12")
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_kacnu"]
-vertices = PackedVector2Array(95, 99, 131, 98, 136, 621, 97, 623)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(95, 99, 131, 98, 136, 621, 97, 623)])
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukhe0"]
+bg_color = Color(0.0313726, 0.0313726, 0.0313726, 0.552941)
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_08iix"]
-vertices = PackedVector2Array(681, 96, 687, 140, 134, 143, 134, 100)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(134, 100, 134, 143, 687, 140, 681, 96)])
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x8p8q"]
+bg_color = Color(0.0588235, 0.0588235, 0.25098, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_s54qn"]
-vertices = PackedVector2Array(458, 144, 465, 621, 338, 623, 343, 144)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(343, 144, 338, 623, 465, 621, 458, 144)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_p8luh"]
-vertices = PackedVector2Array(138, 415, 331, 409, 330, 463, 138, 466)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(138, 415, 331, 409, 330, 463, 138, 466)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_kxb8r"]
-vertices = PackedVector2Array(650, 153, 695, 154, 708, 622, 651, 623)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(650, 153, 695, 154, 708, 622, 651, 623)])
-
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_xykc0"]
-vertices = PackedVector2Array(469, 411, 645, 413, 645, 543, 469, 547)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(469, 411, 645, 413, 645, 543, 469, 547)])
-
-[sub_resource type="Curve2D" id="Curve2D_g7for"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 133, 141, 0, 0, 0, 0, 133, 424, 0, 0, 0, 0, 347, 424, 0, 0, 0, 0, 347, 141, 0, 0, 0, 0, 133, 141)
-}
-point_count = 5
-
-[sub_resource type="Curve2D" id="Curve2D_41pet"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 113, 119, 0, 0, 0, 0, 113, 610, 0, 0, 0, 0, 113, 119)
-}
-point_count = 3
-
-[node name="world" type="Node2D"]
+[node name="world" type="Node2D" node_paths=PackedStringArray("win_screen", "lose_screen")]
+process_mode = 3
 script = ExtResource("1_s5rh5")
+win_screen = NodePath("WinScreen")
+lose_screen = NodePath("LoseScreen")
 metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
+process_mode = 1
 tile_set = SubResource("TileSet_hthye")
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 458752, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 9, 0, 0, 8, 0, 0, 7, 0, 0, 6, 0, 0, 5, 0, 0, 4, 0, 0, 3, 0, 0, 2, 0, 0, 1, 0, 0, 131074, 0, 0, 196610, 0, 0, 262146, 0, 0, 262147, 0, 0, 196611, 0, 0, 131075, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0, 262151, 0, 0, 196615, 0, 0, 131079, 0, 0, 458754, 0, 0, 458755, 0, 0, 393218, 0, 0, 393219, 0, 0, 458758, 0, 0, 458759, 0, 0, 65545, 0, 0, 131081, 0, 0, 196617, 0, 0, 262153, 0, 0, 327689, 0, 0, 393225, 0, 0, 458761, 0, 0)
 metadata/_edit_lock_ = true
 
-[node name="CharacterController" type="Node2D" parent="." node_paths=PackedStringArray("controlled", "target")]
+[node name="CharacterController" type="Node2D" parent="." node_paths=PackedStringArray("target")]
+process_mode = 1
 script = ExtResource("3_rrdjt")
-controlled = NodePath("../Civilians/Path2D2/Civilian")
 target = NodePath("../Target")
 
 [node name="Target" parent="." instance=ExtResource("4_vfos8")]
-position = Vector2(679, 583)
+process_mode = 1
 
 [node name="NavMeshes" type="Node" parent="."]
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="NavMeshes"]
-navigation_polygon = SubResource("NavigationPolygon_kacnu")
-
-[node name="NavigationRegion2D2" type="NavigationRegion2D" parent="NavMeshes"]
-navigation_polygon = SubResource("NavigationPolygon_08iix")
-
-[node name="NavigationRegion2D3" type="NavigationRegion2D" parent="NavMeshes"]
-scale = Vector2(1, 1.00163)
-navigation_polygon = SubResource("NavigationPolygon_s54qn")
-
-[node name="NavigationRegion2D4" type="NavigationRegion2D" parent="NavMeshes"]
-navigation_polygon = SubResource("NavigationPolygon_p8luh")
-
-[node name="NavigationRegion2D5" type="NavigationRegion2D" parent="NavMeshes"]
-navigation_polygon = SubResource("NavigationPolygon_kxb8r")
-
-[node name="NavigationRegion2D6" type="NavigationRegion2D" parent="NavMeshes"]
-navigation_polygon = SubResource("NavigationPolygon_xykc0")
+process_mode = 1
 
 [node name="Civilians" type="Node" parent="."]
+process_mode = 1
 
-[node name="Path2D" type="Path2D" parent="Civilians"]
-position = Vector2(320, 0)
-curve = SubResource("Curve2D_g7for")
+[node name="WinScreen" type="CanvasLayer" parent="."]
+process_mode = 2
+visible = false
 
-[node name="Civilian" parent="Civilians/Path2D" instance=ExtResource("2_yrjrr")]
-position = Vector2(133, 141)
-rotation = 1.5708
-weapon = 2
+[node name="PanelContainer" type="PanelContainer" parent="WinScreen"]
+custom_minimum_size = Vector2(1280, 720)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukhe0")
 
-[node name="Path2D2" type="Path2D" parent="Civilians"]
-curve = SubResource("Curve2D_41pet")
+[node name="PanelContainer" type="PanelContainer" parent="WinScreen/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_x8p8q")
 
-[node name="Civilian" parent="Civilians/Path2D2" instance=ExtResource("2_yrjrr")]
-position = Vector2(113, 119)
-rotation = 1.5708
+[node name="MarginContainer" type="MarginContainer" parent="WinScreen/PanelContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 70
+text = "You win!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="NextLevelButton" type="Button" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 25
+text = "Next Level"
+
+[node name="MainMenuButton" type="Button" parent="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 25
+text = "Main Menu"
+
+[node name="LoseScreen" type="CanvasLayer" parent="."]
+process_mode = 2
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="LoseScreen"]
+custom_minimum_size = Vector2(1280, 720)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukhe0")
+
+[node name="PanelContainer" type="PanelContainer" parent="LoseScreen/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_x8p8q")
+
+[node name="MarginContainer" type="MarginContainer" parent="LoseScreen/PanelContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LoseScreen/PanelContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="LoseScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.819608, 0.819608, 0.819608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 70
+text = "Game over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="LoseScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LoseScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="RestartButton" type="Button" parent="LoseScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 25
+text = "Restart"
+
+[node name="MainMenuButton" type="Button" parent="LoseScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 25
+text = "Main Menu"
 
 [connection signal="lose" from="CharacterController" to="." method="_on_character_controller_lose"]
 [connection signal="win" from="CharacterController" to="." method="_on_character_controller_win"]
+[connection signal="pressed" from="WinScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
+[connection signal="pressed" from="LoseScreen/PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
