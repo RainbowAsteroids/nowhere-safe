@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bvqkyk01h542u"]
+[gd_scene load_steps=15 format=3 uid="uid://bvqkyk01h542u"]
 
 [ext_resource type="Texture2D" uid="uid://bxivamxpsnvdr" path="res://tile-map/tile.png" id="1_qgk20"]
 [ext_resource type="Script" path="res://world/world.gd" id="1_s5rh5"]
@@ -6,10 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://cygsgh4vg1irv" path="res://tile-map/vent.png" id="3_tu802"]
 [ext_resource type="PackedScene" uid="uid://crxud02bvvki7" path="res://target/target.tscn" id="4_vfos8"]
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_d1mov"]
+polygon = PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rqnkj"]
 texture = ExtResource("1_qgk20")
 texture_region_size = Vector2i(80, 80)
 0:0/0 = 0
+0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_d1mov")
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)
@@ -25,6 +29,7 @@ texture_region_size = Vector2i(80, 80)
 
 [sub_resource type="TileSet" id="TileSet_hthye"]
 tile_size = Vector2i(80, 80)
+occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_rqnkj")
 sources/1 = SubResource("TileSetAtlasSource_5hp12")
@@ -40,6 +45,12 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_06185"]
+
+[sub_resource type="Gradient" id="Gradient_0l24e"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uvs7h"]
+gradient = SubResource("Gradient_0l24e")
 
 [node name="world" type="Node2D" node_paths=PackedStringArray("win_screen", "lose_screen", "current_time", "best_time", "best_time_indicator")]
 process_mode = 3
@@ -73,6 +84,7 @@ process_mode = 1
 
 [node name="WinScreen" type="CanvasLayer" parent="."]
 process_mode = 2
+layer = 10
 visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="WinScreen"]
@@ -161,6 +173,7 @@ text = "Main Menu"
 
 [node name="LoseScreen" type="CanvasLayer" parent="."]
 process_mode = 2
+layer = 10
 visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="LoseScreen"]
@@ -214,6 +227,16 @@ layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 25
 text = "Main Menu"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.34902, 0.34902, 0.34902, 1)
+
+[node name="background" type="Sprite2D" parent="."]
+modulate = Color(0.137255, 0.141176, 0.329412, 1)
+z_index = -10
+position = Vector2(640.5, 361)
+scale = Vector2(5.01172, 722)
+texture = SubResource("GradientTexture1D_uvs7h")
 
 [connection signal="lose" from="CharacterController" to="." method="_on_character_controller_lose"]
 [connection signal="win" from="CharacterController" to="." method="_on_character_controller_win"]

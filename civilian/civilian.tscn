@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://mrjjviudw1s7"]
+[gd_scene load_steps=17 format=3 uid="uid://mrjjviudw1s7"]
 
 [ext_resource type="Script" path="res://civilian/civilian.gd" id="1_kqpa8"]
 [ext_resource type="Texture2D" uid="uid://bwglvjopwx8od" path="res://sprites/guard-back.png" id="2_yos5b"]
@@ -68,7 +68,31 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "uncontrolled_sprite", "controlled_sprite", "bang_sprite", "interro_sprite", "stun_timer", "suspicious_timer") groups=["civilian"]]
+[sub_resource type="Gradient" id="Gradient_b5vi3"]
+offsets = PackedFloat32Array(0, 0.914754)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qrbwe"]
+gradient = SubResource("Gradient_b5vi3")
+width = 500
+height = 500
+fill = 1
+fill_from = Vector2(0.470085, 0.465812)
+fill_to = Vector2(0.84188, 0.824786)
+
+[sub_resource type="Gradient" id="Gradient_ep102"]
+offsets = PackedFloat32Array(0.268852, 1)
+colors = PackedColorArray(0.34, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d2453"]
+gradient = SubResource("Gradient_ep102")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.470085, 0.465812)
+fill_to = Vector2(0.816239, 0.773504)
+
+[node name="Civilian" type="PathFollow2D" node_paths=PackedStringArray("body", "nav_agent", "uncontrolled_sprite", "controlled_sprite", "bang_sprite", "interro_sprite", "stun_timer", "suspicious_timer", "target_light", "controlled_light") groups=["civilian"]]
 rotates = false
 script = ExtResource("1_kqpa8")
 body = NodePath("CharacterBody2D")
@@ -79,6 +103,8 @@ bang_sprite = NodePath("CharacterBody2D/BangSprite")
 interro_sprite = NodePath("CharacterBody2D/InterroSprite")
 stun_timer = NodePath("StunTimer")
 suspicious_timer = NodePath("SuspiciousTimer")
+target_light = NodePath("CharacterBody2D/TargetLight")
+controlled_light = NodePath("CharacterBody2D/ControlledLight")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 input_pickable = true
@@ -116,6 +142,18 @@ texture_filter = 1
 position = Vector2(1.625, -57.375)
 scale = Vector2(0.645833, 0.577206)
 texture = ExtResource("9_lurdh")
+
+[node name="ControlledLight" type="PointLight2D" parent="CharacterBody2D"]
+visible = false
+shadow_enabled = true
+shadow_filter = 2
+texture = SubResource("GradientTexture2D_qrbwe")
+
+[node name="TargetLight" type="PointLight2D" parent="CharacterBody2D"]
+visible = false
+shadow_enabled = true
+shadow_filter = 2
+texture = SubResource("GradientTexture2D_d2453")
 
 [node name="StunTimer" type="Timer" parent="."]
 wait_time = 3.0

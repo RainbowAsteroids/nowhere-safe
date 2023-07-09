@@ -40,8 +40,25 @@ const suspicion_clock_end := 0.75
 @export var suspicious_timer: Timer
 @export var weapon := Weapon.Melee
 
+@export var target_light: PointLight2D
+@export var controlled_light: PointLight2D
+
 var state := State.Default:
 	set(v):
+		match state: # on-exit state
+			State.Suspicious:
+				suspicion_clock = 0.0
+				suspicious_timer.stop()
+				bang_sprite.visible = false
+			State.Stunned:
+				interro_sprite.visible = false
+			State.Confused:
+				interro_sprite.visible = false
+			State.Controlled:
+				controlled_light.visible = false
+			_:
+				pass
+		
 		match v: # on-enter state
 			State.Default:
 				body.position = Vector2.ZERO
@@ -52,22 +69,18 @@ var state := State.Default:
 				interro_sprite.visible = true
 			State.Suspicious:
 				bang_sprite.visible = true
-			_:
-				pass
-		
-		match state: # on-exit state
-			State.Suspicious:
-				suspicion_clock = 0.0
-				suspicious_timer.stop()
-				bang_sprite.visible = false
-			State.Confused:
-				interro_sprite.visible = false
+			State.Controlled:
+				controlled_light.visible = true
 			_:
 				pass
 		
 		state = v
 
-var hover := false
+var hover := false:
+	set(v):
+		hover = v
+		target_light.visible = hover
+
 var near_target := false
 
 var suspicion_clock := 0.0
